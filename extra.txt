@@ -1,0 +1,152 @@
+// app.get('/sse', (req, res,next) => {
+//     // Store the SSE object associated with this user
+//     const userId = req.query.userId;
+//     connectedClients[userId] = res; // Store the response object
+  
+//     // Set SSE-specific headers
+//     res.setHeader('Content-Type', 'text/event-stream');
+//     res.setHeader('Cache-Control', 'no-cache');
+//     res.setHeader('Connection', 'keep-alive');
+//     res.flushHeaders(); // Send the headers to the client
+  
+//     // Simulate SSE data (replace this with your data source)
+//     setInterval(() => {
+//       const eventData = 'Your SSE data here';
+//       res.write(`data: ${JSON.stringify(eventData)}\n\n`); // Send data to the client
+//     }, 1000);
+  
+//     // Handle client disconnect (optional)
+//     req.on('close', () => {
+//       delete connectedClients[userId]; // Remove the client from your connected clients list
+//       res.end(); // End the response
+//     });
+// });
+
+// // Send events to specific users
+// function sendEventToUser(userId, eventData) {
+//   const client = connectedClients[userId];
+//   if (client) {
+//     client.send(eventData);
+//   }
+// }
+
+// // Example route to send an event to a specific user
+// app.post('/sendEvent', (req, res) => {
+//   const { userId, event } = req.body;
+//   sendEventToUser(userId, event);
+//   res.sendStatus(200);
+// });
+
+// eventEmitter.on('notification', (message) => {
+//   console.log(`Received notification: ${message}`);
+// });
+
+
+
+// const getEventsData = async() => {
+//   const dateObject = new Date();
+//   var mm = ("0" + (dateObject.getMonth() + 1)).slice(-2);
+//   var dd =("0" + (dateObject.getDate())).slice(-2);
+//   var yy = dateObject.getFullYear();
+//   var dateString = yy + '-' + dd + '-' + mm;
+//   const time = dateObject.toLocaleTimeString('en-US', { hour12: false, 
+//     hour: "numeric", 
+//     minute: "numeric",
+//     second: "numeric"
+//   })
+//   const eventCurrentTime = `${dateString} ${time}`
+//   dateObject.setTime(dateObject.getTime() + 60000)
+//   const timeWithMargin = dateObject.toLocaleTimeString('en-US', { hour12: false, 
+//     hour: "numeric", 
+//     minute: "numeric",
+//     second: "numeric"
+//   })
+//   const extendedDateTime = `${dateString} ${timeWithMargin}`
+//   client.query( `SELECT * FROM events WHERE eventdate >='${eventCurrentTime}' AND eventdate <='${extendedDateTime}'`, (err, res) => {
+//     if (err) {
+//         let que= `SELECT * FROM events WHERE eventdate >= '${eventCurrentTime}' AND eventdate <='${extendedDateTime}'`
+//       console.log("data",que)
+//       console.error('Error executing query:', err);
+//     } else {
+//       let que= `SELECT * FROM events WHERE eventdate >= '${eventCurrentTime}' AND eventdate <='${extendedDateTime}'`
+//       console.log("data",que)
+//       console.log('Query result:', res.rows);
+//     }
+//   });
+// }
+
+// setInterval(() => {
+//   getEventsData()
+// },6000)
+
+
+// client.query('LISTEN alerts_channel');
+// client.on('notification', (notification) => {
+//   const eventData = JSON.parse(notification.payload);
+//   console.log('Received event date notification:', eventData);
+//   // sendEventToUser(userId,eventData)
+// });
+
+// client.on('error', (err) => {
+//   console.error('Database error:', err);
+// });
+
+
+// db.sequelize.sync({force:true})
+// db.sequelize.sync().then(() => {
+//   console.log('Drop and Resync Database with { force: true }');
+//   // const { User, Company } = require('./models'); // Adjust the path as needed
+//     (async () => {
+//       try {
+//         // Create a company and users associated with the company
+//         const company = await Company.create({ name: 'Hyla Company' });
+//         await EventType.bulkCreate([
+//           { name: 'ETD'},
+//           {name : 'ETA Port'},
+//           {name : 'ETA PBG'},
+//           {name : 'ETA berth'},
+//           {name : 'NOR Tendered'},
+//           {name : 'POB'},
+//           {name : 'Tugs made fast'},
+//           {name : 'First line Ashore'},
+//           {name : 'All Fast'},
+//           {name : 'Commenced Morning'},
+//           {name : 'Completed Morning'},
+//         ]);
+//         const User1 = await User.create({ username: 'abhishek', companyId: company.id, password:'123456789', user_role:'Admin',role:'Admin' })
+//         const User2 = await User.create({ username: 'kautsabh', companyId: company.id,password:'123456789', user_role:'User',role:'Admin'})
+//         const EventETA = await EventType.create({name: 'ETA'})
+//            const roles = await Role.bulkCreate([
+//           { name: 'Admin' },
+//           { name: 'User' },
+//         ]);
+//         const permissions = await Permission.bulkCreate([
+//           { name: 'createEvent' },
+//           { name: 'addGeofence' },
+//           { name: 'addBerth' },
+//           { name: 'completeEvent' },
+//         ]);
+//         const adminRole = roles[0];
+//         const userRole = roles[1];
+//         await adminRole.setPermissions(permissions.slice(0, 3));
+//         await userRole.setPermissions([permissions[3]]);
+//         // const company = await Company.create({ name: 'Company X' });
+//         const terminal1 = await Terminal.create({ name: 'Terminal A', companyId: company.id });
+//         const terminal2 = await Terminal.create({ name: 'Terminal B', companyId: company.id });
+//         // Create berths associated with terminals
+//         const berth1 = await Berth.create({ name: 'Berth 1', terminalId: terminal1.id });
+//         const Ship1 = await Ship.create({ name: 'Ship 1', berthId: berth1.id });
+//         const Ship2 = await Berth.create({ name: 'Ship 2', berthId: berth1.id });
+//         const Voy1 = await Voyage.create({ name: 'Voyage 1', shipId: Ship1.id });
+//         // const Voy2 = await Voyage.create({ name: 'Voyage 2', shipId: Ship1.id });
+//         const Voy3 = await Voyage.create({ name: 'Voyage 3', shipId: Ship1.id });
+//         const Voy4 = await Voyage.create({ name: 'Voyage 4', shipId: Ship1.id });
+//         const Voy5 = await Voyage.create({ name: 'Voyage 5', shipId: Ship1.id });
+//         const userEventPermission = await EventPermissions.create({name:'ETA',eventTypeId:EventETA.id,userId:User1.userId})
+//         // const Voy2 = await Voyage.create({ name: 'Voyage 2', shipId: Ship2.id });
+//         console.log('Data inserted successfully.');
+//       } catch (error) {
+//         console.error('Error:', error);
+//       }
+//     })();
+// });
