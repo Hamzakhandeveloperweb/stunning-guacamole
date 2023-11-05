@@ -1,6 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
   const Berth = sequelize.define("berth", {
-    
     id: {
         type: Sequelize.UUID,
         primaryKey: true,
